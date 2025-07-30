@@ -1,0 +1,45 @@
+[
+  {
+    "id": "5d49adfe-a0d1-4786-9997-0d50fcab7d93",
+    "name": "John Smith",
+    "specializations": [
+      "plumbing",
+      "general"
+    ],
+    "is_available": true
+  },
+  {
+    "id": "a178152a-3b0d-428b-a461-c793fdadb5e0",
+    "name": "Maria Garcia",
+    "specializations": [
+      "electrical"
+    ],
+    "is_available": true
+  },
+  {
+    "id": "24ca2ebe-56ac-4641-98e3-522480ed8de8",
+    "name": "David Wilson",
+    "specializations": [
+      "hvac"
+    ],
+    "is_available": true
+  },
+  {
+    "id": "503d7ea3-63e3-46ea-9a8e-d028ad9f36f3",
+    "name": "Sarah Johnson",
+    "specializations": [
+      "appliance",
+      "electrical"
+    ],
+    "is_available": true
+  },
+  {
+    "id": "1b982a4d-7046-4d6e-9815-31171f02f1bd",
+    "name": "Mike Brown",
+    "specializations": [
+      "plumbing",
+      "hvac"
+    ],
+    "is_available": true
+  }
+]

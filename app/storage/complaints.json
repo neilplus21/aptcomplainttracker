@@ -1,0 +1,12 @@
+[
+  {
+    "id": "9f00bd8d-fe8b-4728-9551-9530389d00d4",
+    "category": "electrical",
+    "description": "not working",
+    "status": "assigned",
+    "resident_id": "9012",
+    "technician_id": "503d7ea3-63e3-46ea-9a8e-d028ad9f36f3",
+    "created_at": "2025-07-30T20:12:52.660653",
+    "updated_at": "2025-07-30T20:12:52.660653"
+  }
+]

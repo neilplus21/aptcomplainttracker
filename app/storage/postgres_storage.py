@@ -9,7 +9,7 @@ class PostgreSQLStorage(StorageInterface):
             from psycopg2.extras import RealDictCursor
             self.psycopg2 = psycopg2
             self.RealDictCursor = RealDictCursor
-            self._initialize_tables()  # <-- Add this line!
+            self._initialize_tables() 
         except ImportError:
             self.psycopg2 = None
             print("psycopg2 not installed, simulation only.")
@@ -82,8 +82,13 @@ class PostgreSQLStorage(StorageInterface):
         if not self.psycopg2:
             print("[PostgreSQL] Update complaint: Simulation only.")
             return
-        set_clause = ", ".join([f"{key}=%s" for key in updates])
-        params = list(updates.values()) + [complaint_id]
+        updates_to_set = updates.copy()
+        if "status" in updates:
+            updates_to_set["updated_at"] = datetime.now() 
+
+        set_clause = ", ".join([f"{key}=%s" for key in updates_to_set])
+        params = list(updates_to_set.values()) + [complaint_id]
+
         with self._get_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE complaints SET {set_clause} WHERE id=%s", params)

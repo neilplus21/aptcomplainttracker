@@ -1,7 +1,11 @@
 from config import get_storage_choice
+from dotenv import load_dotenv
 from core.complaint_system import ComplaintSystem
 from utils.enums import ComplaintCategory, ComplaintStatus
 
+load_dotenv()
+# task: removing hardcoding 
+# push redundant messages to .env file
 def main():
     storage = get_storage_choice()
     system = ComplaintSystem(storage)
@@ -67,15 +71,25 @@ def main():
             else:
                 print("No complaints found!")
         elif choice == "5":
-            technicians = system.list_all_technicians()
-            if technicians:
-                print(f"\n--- All Technicians ({len(technicians)}) ---")
-                for tech in technicians:
-                    print(f"Name: {tech['name']} | "
-                          f"Specializations: {', '.join(tech['specializations'])} | "
-                          f"Available: {tech['is_available']}")
+            import os
+            import json
+
+            # Adjust this path as needed if your file is elsewhere:
+            json_path = os.path.join(os.path.dirname(__file__), "storage", "technicians.json")
+            if os.path.exists(json_path):
+                with open(json_path, "r") as f:
+                    technicians = json.load(f)
+                if technicians:
+                    print(f"\n--- All Technicians ({len(technicians)}) ---")
+                    for tech in technicians:
+                        print(f"Name: {tech['name']} | "
+                            f"Specializations: {', '.join(tech['specializations'])} | "
+                            f"Available: {tech['is_available']}")
+                else:
+                    print("No technicians found in technicians.json!")
             else:
-                print("No technicians found!")
+                print("technicians.json file not found!")
+
         elif choice == "6":
             print("Thank you for using Apartment Complaint Tracker!")
             break

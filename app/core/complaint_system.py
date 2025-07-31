@@ -17,10 +17,14 @@ class ComplaintSystem:
         return complaint.id
     def _find_suitable_technician(self, category):
         technicians = self.storage.get_all_technicians()
-        suitable = [t for t in technicians if category.value in t['specializations'] and t['is_available']]
+        suitable = [
+            t for t in technicians
+            if category.value in t['specializations'] and t['is_available'] is True
+        ]
         if suitable:
             return random.choice(suitable)
-        avails = [t for t in technicians if t['is_available']]
+        avails = [t for t in technicians if t['is_available'] is True]
+
         return random.choice(avails) if avails else None
     def update_complaint_status(self, complaint_id, status):
         self.storage.update_complaint(complaint_id, {'status': status.value})

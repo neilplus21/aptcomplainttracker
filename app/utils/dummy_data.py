@@ -1,15 +1,14 @@
-from models.technician import Technician
-from utils.enums import ComplaintCategory
+import json
+import os
 
 def initialize_dummy_technicians(storage):
+    json_path = os.path.join(os.path.dirname(__file__), '../storage/technicians.json')
+    with open(json_path, "r") as f:
+        technicians = json.load(f)
+
     existing = storage.get_all_technicians()
-    if not existing:
-        dummy = [
-            Technician("John Smith", [ComplaintCategory.PLUMBING, ComplaintCategory.GENERAL]),
-            Technician("Maria Garcia", [ComplaintCategory.ELECTRICAL]),
-            Technician("David Wilson", [ComplaintCategory.HVAC]),
-            Technician("Sarah Johnson", [ComplaintCategory.APPLIANCE, ComplaintCategory.ELECTRICAL]),
-            Technician("Mike Brown", [ComplaintCategory.PLUMBING, ComplaintCategory.HVAC]),
-        ]
-        for tech in dummy:
-            storage.save_technician(tech)
+    # Optional: avoid duplicates based on IDs
+    existing_ids = {tech['id'] for tech in existing}
+    for tech in technicians:
+        if tech['id'] not in existing_ids:
+            storage.save_technician_from_dict(tech)

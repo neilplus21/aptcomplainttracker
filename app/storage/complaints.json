@@ -8,5 +8,15 @@
     "technician_id": "503d7ea3-63e3-46ea-9a8e-d028ad9f36f3",
     "created_at": "2025-07-30T20:12:52.660653",
     "updated_at": "2025-07-30T20:12:52.660653"
+  },
+  {
+    "id": "f15de6f4-cd53-4563-ad97-b12b83e121b0",
+    "category": "plumbing",
+    "description": "woifrhwiwogu",
+    "status": "assigned",
+    "resident_id": "23241",
+    "technician_id": "5d49adfe-a0d1-4786-9997-0d50fcab7d93",
+    "created_at": "2025-07-31T09:59:01.960842",
+    "updated_at": "2025-07-31T09:59:01.960842"
   }
 ]

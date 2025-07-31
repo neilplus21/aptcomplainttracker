@@ -10,8 +10,8 @@ def get_storage_choice():
     print("Choose your storage:")
     print("1. JSON Files (Local)")
     print("2. PostgreSQL DB")
-    print("3. MongoDB")
-    ch = input("Enter choice (1-3): ")
+    #print("3. MongoDB")
+    ch = input("Enter choice (1-2): ")
     if ch == "1":
         return JSONStorage()
     elif ch == "2":
@@ -23,12 +23,12 @@ def get_storage_choice():
             "password": os.getenv("POSTGRES_PASSWORD"),
         }
         return PostgreSQLStorage(config)
-    elif ch == "3":
-        config = {
-            "uri": os.getenv("MONGO_URI"),
-            "database": os.getenv("MONGO_DB"),
-        }
-        return MongoDBStorage(config)
+    # elif ch == "3":
+    #     config = {
+    #         "uri": os.getenv("MONGO_URI"),
+    #         "database": os.getenv("MONGO_DB"),
+    #     }
+    #     return MongoDBStorage(config)
     else:
         print("Invalid, defaulting to JSON")
         return JSONStorage()

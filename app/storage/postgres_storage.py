@@ -103,25 +103,6 @@ class PostgreSQLStorage(StorageInterface):
                 cur.execute("SELECT * FROM complaints;")
                 return cur.fetchall()
 
-    def save_technician(self, technician):
-        if not self.psycopg2:
-            print("[PostgreSQL] Save technician: Simulation only.")
-            return
-        with self._get_connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute("""
-                    INSERT INTO technicians (
-                        id, name, specializations, is_available
-                    ) VALUES (%s,%s,%s,%s)
-                    ON CONFLICT (id) DO NOTHING
-                """, (
-                    technician.id,
-                    technician.name,
-                    [spec.value for spec in technician.specializations],
-                    technician.is_available
-                ))
-                conn.commit()
-
     def get_all_technicians(self):
         if not self.psycopg2:
             print("[PostgreSQL] Get all techs: Simulation.")
@@ -139,3 +120,23 @@ class PostgreSQLStorage(StorageInterface):
             with conn.cursor(cursor_factory=self.RealDictCursor) as cur:
                 cur.execute("SELECT * FROM technicians WHERE id=%s", (technician_id,))
                 return cur.fetchone()
+            
+    def save_technician_from_dict(self, tech_dict):
+        # If your db 'specializations' column is an array: tweak as needed
+        from utils.enums import ComplaintCategory
+        specializations = tech_dict.get('specializations', [])
+        # Postgres/Mongo: if you require complaint categories as Enum, you may convert here
+        with self._get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO technicians (
+                        id, name, specializations, is_available
+                    ) VALUES (%s, %s, %s, %s)
+                    ON CONFLICT (id) DO NOTHING
+                """, (
+                    tech_dict['id'],
+                    tech_dict['name'],
+                    specializations,
+                    tech_dict['is_available']
+                ))
+                conn.commit()

@@ -32,10 +32,25 @@ class JSONStorage(StorageInterface):
         self._save_complaints(complaints)
     def get_all_complaints(self):
         return self._load_complaints()
-    def save_technician(self, technician):
-        technicians = self._load_technicians()
-        technicians.append(technician.to_dict())
-        self._save_technicians(technicians)
+    def save_technician_from_dict(self, tech_dict):
+        # If your db 'specializations' column is an array: tweak as needed
+        from utils.enums import ComplaintCategory
+        specializations = tech_dict.get('specializations', [])
+        # Postgres/Mongo: if you require complaint categories as Enum, you may convert here
+        with self._get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO technicians (
+                        id, name, specializations, is_available
+                    ) VALUES (%s, %s, %s, %s)
+                    ON CONFLICT (id) DO NOTHING
+                """, (
+                    tech_dict['id'],
+                    tech_dict['name'],
+                    specializations,
+                    tech_dict['is_available']
+                ))
+                conn.commit()
     def get_all_technicians(self):
         return self._load_technicians()
     def get_technician(self, technician_id):

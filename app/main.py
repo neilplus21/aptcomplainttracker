@@ -1,3 +1,4 @@
+import os
 from config import get_storage_choice
 from dotenv import load_dotenv
 from core.complaint_system import ComplaintSystem
@@ -7,6 +8,7 @@ load_dotenv()
 # task: removing hardcoding 
 # push redundant messages to .env file
 def main():
+    import os
     storage = get_storage_choice()
     system = ComplaintSystem(storage)
 
@@ -32,7 +34,7 @@ def main():
                 complaint_id = system.raise_complaint(category, description, resident_id)
                 print(f"\nComplaint raised successfully! ID: {complaint_id}")
             except (ValueError, IndexError):
-                print("Invalid category choice!")
+                print(os.getenv("INVALID_MESSAGE"))
         elif choice == "2":
             complaint_id = input("Enter complaint ID: ")
             print("\nAvailable statuses:")
@@ -43,7 +45,7 @@ def main():
                 status = list(ComplaintStatus)[status_choice - 1]
                 system.update_complaint_status(complaint_id, status)
             except (ValueError, IndexError):
-                print("Invalid status choice!")
+                print(os.getenv("INVALID_MESSAGE"))
         elif choice == "3":
             complaint_id = input("Enter complaint ID: ")
             complaint = system.get_complaint_details(complaint_id)
@@ -94,7 +96,7 @@ def main():
             print("Thank you for using Apartment Complaint Tracker!")
             break
         else:
-            print("Invalid choice! Please enter 1-6.")
+            print(os.getenv("INVALID_MESSAGE"))
 
 if __name__ == "__main__":
     main()

@@ -18,5 +18,15 @@
     "technician_id": "5d49adfe-a0d1-4786-9997-0d50fcab7d93",
     "created_at": "2025-07-31T09:59:01.960842",
     "updated_at": "2025-07-31T09:59:01.960842"
+  },
+  {
+    "id": "1ffc370e-b10a-4289-b957-fb609c173aa4",
+    "category": "plumbing",
+    "description": "tap isn't working",
+    "status": "resolved",
+    "resident_id": "121",
+    "technician_id": "1b982a4d-7046-4d6e-9815-31171f02f1bd",
+    "created_at": "2025-07-31T15:50:39.237520",
+    "updated_at": "2025-07-31T15:51:34.176215"
   }
 ]
